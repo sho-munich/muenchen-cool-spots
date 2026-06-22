@@ -25,8 +25,8 @@ export default function FilterBar({ filters, onChange, districts }: FilterBarPro
     <div className="sticky top-[52px] z-20 bg-ice/85 backdrop-blur sm:top-[56px]">
       <div className="mx-auto max-w-5xl px-4 py-2.5">
         <div className="flex items-center gap-2">
-          {/* Kategorie-Chips, horizontal scrollbar */}
-          <div className="no-scrollbar -mx-1 flex flex-1 gap-2 overflow-x-auto px-1">
+          {/* Kategorie-Chips, horizontal scrollbar (min-w-0 -> Flexbox erlaubt Schrumpfen + Scrollen) */}
+          <div className="no-scrollbar -mx-1 flex min-w-0 flex-1 gap-2 overflow-x-auto scroll-px-1 px-1">
             <button
               className={`chip ${filters.category === 'Alle' ? 'chip-on' : 'chip-off'}`}
               onClick={() => setCategory('Alle')}

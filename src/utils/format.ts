@@ -33,6 +33,12 @@ export function formatDate(iso: string): string {
   return d.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
+/** Google-Maps-Suchlink aus Name + Adresse (URL-encoded). */
+export function googleMapsSearchUrl(name: string, address: string): string {
+  const query = encodeURIComponent(`${name} ${address}`.trim())
+  return `https://www.google.com/maps/search/?api=1&query=${query}`
+}
+
 /** Akzeptiert leere Strings (optional) oder gültige http(s)-URLs. */
 export function isValidUrl(value: string): boolean {
   if (!value.trim()) return true

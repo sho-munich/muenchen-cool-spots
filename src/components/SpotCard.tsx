@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import type { Spot } from '../types'
 import { CATEGORY_META } from '../utils/constants'
-import { timeAgo } from '../utils/format'
+import { googleMapsSearchUrl, timeAgo } from '../utils/format'
 
 interface SpotCardProps {
   spot: Spot
@@ -22,10 +22,20 @@ export default function SpotCard({ spot }: SpotCardProps) {
         </span>
       </div>
 
-      <p className="mt-1 flex items-center gap-1 text-sm text-slate-500">
-        <PinIcon />
-        <span className="truncate">{spot.district ? `${spot.district} · ` : ''}{spot.address}</span>
+      <p className="mt-1 flex items-start gap-1 text-sm text-slate-500">
+        <span className="mt-0.5"><PinIcon /></span>
+        <span className="break-words">{spot.district ? `${spot.district} · ` : ''}{spot.address}</span>
       </p>
+
+      {/* In Google Maps öffnen – gleicher Stil wie "Google Bewertungen →", touch-freundlich */}
+      <a
+        href={googleMapsSearchUrl(spot.name, spot.address)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-1 inline-flex min-h-[44px] items-center gap-1 self-start text-sm font-semibold text-primary hover:underline"
+      >
+        📍 In Google Maps öffnen
+      </a>
 
       {/* Feature-Zeile */}
       <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
