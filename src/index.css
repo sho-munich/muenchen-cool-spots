@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #F0F9FF;
+  color: #0F172A;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* sanfter Sommer-Verlauf im Hintergrund */
+  background-image:
+    radial-gradient(1200px 600px at 100% -10%, #E0F2FE 0%, transparent 55%),
+    radial-gradient(900px 500px at -10% 0%, #F0FDFA 0%, transparent 50%);
+  background-attachment: fixed;
+  min-height: 100dvh;
+}
+
+@layer components {
+  /* Touch-freundliche Chips für die Filterleiste */
+  .chip {
+    @apply inline-flex items-center justify-center gap-1 rounded-full border px-3.5 text-sm font-medium whitespace-nowrap transition-colors;
+    min-height: 40px;
+  }
+  .chip-on {
+    @apply border-primary bg-primary text-white shadow-sm;
+  }
+  .chip-off {
+    @apply border-sky-200 bg-white text-slate-600 hover:border-accent hover:text-primary;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-5 font-semibold text-white transition-colors hover:bg-sky-600 active:bg-sky-700 disabled:opacity-60;
+    min-height: 48px;
+  }
+}
+
+/* horizontale Filter-Scrollbar verstecken */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Loading-Shimmer */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+  background: #E2F1FB;
+}
+.shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  animation: shimmer 1.4s infinite;
+}
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}

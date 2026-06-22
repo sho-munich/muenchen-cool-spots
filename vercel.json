@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/spot/:id", "destination": "/api/og" },
+    { "source": "/(.*)", "destination": "/" }
+  ]
+}
