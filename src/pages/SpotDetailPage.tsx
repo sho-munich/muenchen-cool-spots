@@ -121,28 +121,28 @@ export default function SpotDetailPage() {
           <p className="mt-5 rounded-xl bg-ice p-4 leading-relaxed text-slate-700">{spot.highlights}</p>
         )}
 
-        <a
-          href={googleMapsSearchUrl(spot.name, spot.address)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-5 inline-flex min-h-[44px] items-center gap-1 text-sm font-semibold text-primary hover:underline"
-        >
-          📍 In Google Maps öffnen
-        </a>
-
-        <div className="mt-3 flex flex-col gap-3 sm:flex-row">
-          {spot.google_maps_url && (
-            <a
-              href={spot.google_maps_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary flex-1"
-            >
-              Google Bewertungen →
-            </a>
-          )}
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <a
+            href={googleMapsSearchUrl(spot.name, spot.address)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary flex-1"
+          >
+            <span aria-hidden="true">📍</span> Adresse &amp; Route
+          </a>
           <ShareButton variant="full" className="flex-1" />
         </div>
+
+        {spot.google_maps_url && (
+          <a
+            href={spot.google_maps_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex min-h-[48px] items-center text-sm font-semibold text-primary hover:underline"
+          >
+            Google-Bewertungen ansehen →
+          </a>
+        )}
 
         <p className="mt-5 border-t border-slate-100 pt-4 text-xs text-slate-400">
           Eingereicht von <span className="font-medium text-slate-500">{spot.submitted_by}</span> ·{' '}

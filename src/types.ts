@@ -24,5 +24,6 @@ export interface Filters {
   category: Category | 'Alle'
   wifiOnly: boolean
   price: PriceCategory | 'Alle'
-  district: string | 'Alle'
+  /** Freitext-Standortsuche: matcht auf district + address (Stadtviertel oder PLZ). */
+  location: string
 }

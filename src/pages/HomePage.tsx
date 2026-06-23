@@ -1,22 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useAppContext } from '../App'
 import AddSpotFAB from '../components/AddSpotFAB'
-import FilterBar from '../components/FilterBar'
+import FilterBar, { DEFAULT_FILTERS } from '../components/FilterBar'
 import SpotList from '../components/SpotList'
 import StatsBanner from '../components/StatsBanner'
 import SubmitSpotSheet from '../components/SubmitSpotSheet'
-import type { Filters } from '../types'
-
-const DEFAULT_FILTERS: Filters = {
-  category: 'Alle',
-  wifiOnly: false,
-  price: 'Alle',
-  district: 'Alle',
-}
 
 export default function HomePage() {
   const { spots, loading, error, demoMode, addSpot } = useAppContext()
-  const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS)
+  const [filters, setFilters] = useState(DEFAULT_FILTERS)
   const [submitOpen, setSubmitOpen] = useState(false)
 
   useEffect(() => {
@@ -31,11 +23,16 @@ export default function HomePage() {
   }, [spots])
 
   const filtered = useMemo(() => {
+    const q = filters.location.trim().toLowerCase()
     return spots.filter((s) => {
       if (filters.category !== 'Alle' && s.category !== filters.category) return false
       if (filters.wifiOnly && !s.wifi) return false
       if (filters.price !== 'Alle' && s.price_category !== filters.price) return false
-      if (filters.district !== 'Alle' && s.district !== filters.district) return false
+      if (q) {
+        // Freitext-Match auf Stadtviertel + Adresse (matcht z.B. "Schwabing" oder "80331")
+        const haystack = `${s.district ?? ''} ${s.address}`.toLowerCase()
+        if (!haystack.includes(q)) return false
+      }
       return true
     })
   }, [spots, filters])
@@ -79,7 +76,7 @@ export default function HomePage() {
 
       <StatsBanner spots={spots} />
 
-      <FilterBar filters={filters} onChange={setFilters} districts={districts} />
+      <FilterBar filters={filters} onChange={setFilters} districts={districts} resultCount={filtered.length} />
 
       <div className="px-4 pb-8 pt-2">
         {error ? (

@@ -27,16 +27,6 @@ export default function SpotCard({ spot }: SpotCardProps) {
         <span className="break-words">{spot.district ? `${spot.district} · ` : ''}{spot.address}</span>
       </p>
 
-      {/* In Google Maps öffnen – gleicher Stil wie "Google Bewertungen →", touch-freundlich */}
-      <a
-        href={googleMapsSearchUrl(spot.name, spot.address)}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-1 inline-flex min-h-[44px] items-center gap-1 self-start text-sm font-semibold text-primary hover:underline"
-      >
-        📍 In Google Maps öffnen
-      </a>
-
       {/* Feature-Zeile */}
       <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
         <Badge on={spot.has_ac} onLabel="❄️ Klimaanlage" offLabel="– keine AC" tone="confirm" />
@@ -57,21 +47,31 @@ export default function SpotCard({ spot }: SpotCardProps) {
         <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-slate-600">{spot.highlights}</p>
       )}
 
-      <div className="mt-4 flex items-center justify-between gap-2 pt-1">
-        {spot.google_maps_url ? (
-          <a
-            href={spot.google_maps_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
-          >
-            Google Bewertungen
-            <span aria-hidden="true">→</span>
-          </a>
-        ) : (
-          <span />
-        )}
-        <span className="text-xs text-slate-400">{timeAgo(spot.created_at)}</span>
+      {/* Klare CTA: führt zur Adresse / Route in Google Maps (neuer Tab), volle Breite, 48px */}
+      <div className="mt-auto pt-4">
+        <a
+          href={googleMapsSearchUrl(spot.name, spot.address)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-primary text-[15px] font-bold text-white transition-colors hover:bg-sky-600 active:scale-[0.98]"
+        >
+          <span aria-hidden="true">📍</span> Adresse &amp; Route
+        </a>
+        <div className="mt-2 flex items-center justify-between gap-2">
+          {spot.google_maps_url ? (
+            <a
+              href={spot.google_maps_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-semibold text-primary hover:underline"
+            >
+              Bewertungen ansehen →
+            </a>
+          ) : (
+            <span />
+          )}
+          <span className="text-xs text-slate-400">{timeAgo(spot.created_at)}</span>
+        </div>
       </div>
     </article>
   )
